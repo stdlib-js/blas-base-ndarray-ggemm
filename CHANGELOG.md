@@ -22,6 +22,7 @@
 
 <details>
 
+-   [`532cf32`](https://github.com/stdlib-js/stdlib/commit/532cf32301c150926621c2806f9d704b2222ca2c) - **style:** re-enable lint rule _(by Athan Reines)_
 -   [`cc19408`](https://github.com/stdlib-js/stdlib/commit/cc1940807bae9f49f1e30d288bdd600770d527b8) - **feat:** add `blas/base/ndarray/ggemm` [(#13533)](https://github.com/stdlib-js/stdlib/pull/13533) _(by Kaustubh Patange, Athan Reines)_
 
 </details>
