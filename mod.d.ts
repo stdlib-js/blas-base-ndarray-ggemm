@@ -1,4 +1,4 @@
-/**
+/*
 * @license Apache-2.0
 *
 * Copyright (c) 2026 The Stdlib Authors.
@@ -16,25 +16,11 @@
 * limitations under the License.
 */
 
-'use strict';
+// TypeScript Version: 4.1
 
-// MODULES //
+/// <reference types="https://cdn.jsdelivr.net/gh/stdlib-js/types@main/index.d.ts"/>
 
-var getShape = require( '@stdlib/ndarray-base-shape' );
-var getStrides = require( '@stdlib/ndarray-base-strides' );
-var getOffset = require( '@stdlib/ndarray-base-offset' );
-var getData = require( '@stdlib/ndarray-base-data-buffer' );
-var ndarraylike2scalar = require( '@stdlib/ndarray-base-ndarraylike2scalar' );
-var resolveEnum = require( '@stdlib/blas-base-transpose-operation-resolve-enum' );
-var strided = require( '@stdlib/blas-base-ggemm' ).ndarray;
-
-
-// VARIABLES //
-
-var NO_TRANSPOSE = resolveEnum( 'no-transpose' );
-
-
-// MAIN //
+import { typedndarray, ndarray } from '@stdlib/types/ndarray';
 
 /**
 * Performs the matrix-matrix operation `C = alpha*op(A)*op(B) + beta*C`, where `op(X)` is either `op(X) = X` or `op(X) = X^T`, `alpha` and `beta` are scalars, `A`, `B`, and `C` are matrices, with `op(A)` an `M` by `K` matrix, `op(B)` a `K` by `N` matrix, and `C` an `M` by `N` matrix.
@@ -51,8 +37,8 @@ var NO_TRANSPOSE = resolveEnum( 'no-transpose' );
 *     -   a zero-dimensional ndarray containing a scalar constant corresponding to `alpha`.
 *     -   a zero-dimensional ndarray containing a scalar constant corresponding to `beta`.
 *
-* @param {ArrayLikeObject<Object>} arrays - array-like object containing ndarrays
-* @returns {Object} output ndarray
+* @param arrays - array-like object containing ndarrays
+* @returns output ndarray
 *
 * @example
 * var matrix = require( '@stdlib/ndarray-matrix-ctor' );
@@ -82,53 +68,9 @@ var NO_TRANSPOSE = resolveEnum( 'no-transpose' );
 * var bool = ( z === C );
 * // returns true
 */
-function ggemm( arrays ) {
-	var transA;
-	var transB;
-	var alpha;
-	var beta;
-	var shA;
-	var shC;
-	var stA;
-	var stB;
-	var stC;
-	var A;
-	var B;
-	var C;
-	var M;
-	var N;
-	var K;
-
-	A = arrays[ 0 ];
-	B = arrays[ 1 ];
-	C = arrays[ 2 ];
-
-	transA = ndarraylike2scalar( arrays[ 3 ] );
-	transB = ndarraylike2scalar( arrays[ 4 ] );
-	alpha = ndarraylike2scalar( arrays[ 5 ] );
-	beta = ndarraylike2scalar( arrays[ 6 ] );
-
-	shA = getShape( A, false );
-	shC = getShape( C, false );
-
-	stA = getStrides( A, false );
-	stB = getStrides( B, false );
-	stC = getStrides( C, false );
-
-	M = shC[ 0 ];
-	N = shC[ 1 ];
-	if ( resolveEnum( transA ) === NO_TRANSPOSE ) {
-		K = shA[ 1 ];
-	} else {
-		K = shA[ 0 ];
-	}
-
-	strided( transA, transB, M, N, K, alpha, getData( A ), stA[ 0 ], stA[ 1 ], getOffset( A ), getData( B ), stB[ 0 ], stB[ 1 ], getOffset( B ), beta, getData( C ), stC[ 0 ], stC[ 1 ], getOffset( C ) ); // eslint-disable-line max-len
-
-	return C;
-}
+declare function ggemm<T extends typedndarray<number> = typedndarray<number>>( arrays: [ typedndarray<number>, typedndarray<number>, T, ndarray, ndarray, typedndarray<number>, typedndarray<number> ] ): T;
 
 
 // EXPORTS //
 
-module.exports = ggemm;
+export = ggemm;
